@@ -1,0 +1,127 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}About Me — Ayokunmi Sodamola{% endblock %}
+
+{% block content %}
+<header class="aboutme-header">
+  <div class="container aboutme-header-inner">
+    <a href="{% url 'home' %}" class="back-link">← Back to Portfolio</a>
+    <h1 class="aboutme-header-title">About Me</h1>
+    <span></span>
+  </div>
+</header>
+
+<section class="aboutme-section">
+  <div class="container">
+    <!-- Hero: photo + intro -->
+    <div class="aboutme-hero-grid">
+      <div class="aboutme-photo">
+        <img src="{% static 'main/images/ayokunmi-about.jpg' %}" alt="Ayokunmi Sodamola" />
+        <div class="aboutme-photo-overlay"></div>
+      </div>
+
+      <div class="aboutme-intro">
+        <h2 class="aboutme-title">Yeah, I love <span class="accent script">Building</span></h2>
+        <p class="aboutme-lead">I think I still do 😊. In my current life, I build a lot of digital products. Enterprise platforms, fintech solutions, you name them all. By "current life", I mean the life where I enjoy solving complex business problems through technology.</p>
+        <div class="aboutme-quote">
+          <div class="quote-mark">“</div>
+          <p>I believe businesses can win in the marketplace through great technology and user experience.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Journey -->
+    <div class="aboutme-journey">
+      <div class="journey-head">
+        <h3>My Journey</h3>
+        <div class="accent-underline"></div>
+      </div>
+
+      <div class="journey-grid">
+        <div>
+          <h4>The Professional Foundation</h4>
+          <p class="muted">I am a human-centered product and project manager with over 4 years of experience passionate about the intersection of technology, and customer behavioral science. I believe a balanced approach to people, the planet and our products is essential to our long-term success.</p>
+          <p class="muted">I perfectly balance user and business needs to create delightful products. I have driven growth and scaled successful products across emerging markets in Africa, and US from discovery to post-launch activities.</p>
+        </div>
+        <div>
+          <h4>The Product Vision</h4>
+          <p class="muted">As a multifaceted product delivery professional, I am a user/customer advocate, a systems thinker, a problem solver, and a passionate idealist. With my unique background in finance and technology, I thrive on the spirit of adventure and discovery.</p>
+          <p class="muted">My product strategy always combines the pursuit of functional and business goals, with an in-depth understanding of the context and ecosystem.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Core philosophy quote -->
+    <div class="aboutme-big-quote">
+      <div class="quote-mark-lg">“</div>
+      <p>"I specialize in making an impact through Innovation, Product Strategy, and Product Ops."</p>
+      <footer>— My core philosophy</footer>
+    </div>
+
+    <!-- Professional Experience -->
+    <div class="aboutme-block">
+      <h3 class="centered">Professional Experience</h3>
+      <div class="exp-grid">
+        <div class="exp-card">
+          <h4>Current Role</h4>
+          <p class="muted">I work with multidisciplinary teams, embracing chaos and ambiguity, while confidently bringing clarity to complex ideas through strategy. I'm a strategic partner with experience building for different contexts, from early to growth stage B2C and B2B digital products.</p>
+          <div class="skill-tags" style="margin-top: 1rem;">
+            <span class="tag tag-primary">Product Strategy</span>
+            <span class="tag tag-primary">Innovation</span>
+            <span class="tag tag-primary">Product Ops</span>
+            <span class="tag tag-primary">User Research</span>
+          </div>
+        </div>
+        <div class="exp-card">
+          <h4>Key Strengths</h4>
+          <ul class="muted strengths-list">
+            <li>Deep understanding of balancing stakeholders' business objectives with user needs</li>
+            <li>Human-centered and goal-driven approach to designing products</li>
+            <li>Identifying and troubleshooting User Experience Problems</li>
+            <li>Maintaining accurate roadmaps for products</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Beyond Work -->
+    <div class="aboutme-block">
+      <h3 class="centered">Beyond Work</h3>
+      <div class="beyond-grid">
+        <div class="beyond-card">
+          <div class="beyond-icon">🧘🏽‍♂️</div>
+          <h4>Meditation Practitioner</h4>
+          <p class="muted">Since starting daily meditations in 2019, my productivity has increased dramatically, my life goals have become clearer, and I have more energy for my workdays.</p>
+        </div>
+        <div class="beyond-card">
+          <div class="beyond-icon">🎵</div>
+          <h4>Creative Explorer</h4>
+          <p class="muted">I enjoy listening to podcasts, creating Lo-fi music, and taking photographs of buildings and materials like wood, porcelain, and fluted glass.</p>
+        </div>
+        <div class="beyond-card">
+          <div class="beyond-icon">🐊</div>
+          <h4>Comfort Enthusiast</h4>
+          <p class="muted">I've always been a lover of crocs — they provide comfort and are incredibly practical for daily life. Sometimes it's the simple things that matter most.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Adventure & Learning -->
+    <div class="adventure-box">
+      <h3 class="centered">Adventure &amp; Learning</h3>
+      <div class="adventure-grid">
+        <p class="muted">Overall, I love adventure, learning new perspectives from diverse people, and enriching my mind with different views &amp; experiences. When I'm not creating on my laptop, I'm also a photographer; slightly obsessed with documenting experiences.</p>
+        <p class="muted">Outside of work, I enjoy playing video games and reading about art and nature. I can usually be found outdoors exploring something new, always seeking to expand my horizons and understanding of the world around me.</p>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-banner">
+      <h3>Let's Build Something Amazing Together</h3>
+      <p class="muted">Whether you're looking for a product strategist, a collaborative team member, or someone to bring your next big idea to life, I'd love to hear from you.</p>
+      <a href="{% url 'home' %}#contact" class="btn btn-primary">Get In Touch</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

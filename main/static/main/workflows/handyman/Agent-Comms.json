@@ -1,0 +1,133 @@
+{
+  "name": "Agent-Comms",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "agent-comms",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "23d98b05-36a3-482d-899f-3fb00cc9aa19",
+      "name": "Webhook",
+      "webhookId": "d16f6207-973e-4109-a0f3-ce4e17ff78e6"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=IMPORTANT:\n- Output ONLY valid JSON.\n- Do NOT use markdown.\n- Do NOT use ``` fences.\n- Do NOT add explanations.\n- The entire response must start with { and end with }.\n- Do not use placeholders like [Client Name]. Use the provided values. If a field is missing, write \"(not provided)\".\n\nWrite a friendly confirmation message for this handyman job. Keep it under 120 words.\nReturn ONLY JSON:\n{ \"message\": \"\" }\n\nJob:\n{{ JSON.stringify($json.body.job) }}\n\nPricing:\n{{ JSON.stringify($json.body.pricing) }}\n\nScheduling:\n{{ JSON.stringify($json.body.scheduling) }}"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "0ab7822e-eafa-4616-aba4-6a4a9478453c",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "9M5z4GXn6LRumd1y",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $json.content?.parts?.[0]?.text || $json.text || \"\";\n\nconst cleaned = raw\n  .replace(/```json\\s*/i, \"\")\n  .replace(/```\\s*$/i, \"\")\n  .trim();\n\nlet obj;\ntry {\n  obj = JSON.parse(cleaned);\n} catch (e) {\n  throw new Error(\"Comms agent output not valid JSON after cleaning. Raw output: \" + raw);\n}\n\nreturn [{\n  message: obj.message ?? \"\"\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        0
+      ],
+      "id": "555cd117-7534-4a2d-b287-bd01ba77945f",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        768,
+        0
+      ],
+      "id": "22949da9-bedd-47e4-8dd1-255ea2495464",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "77dc4100-c161-4484-958c-3a0cf7ed6e17",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "38f3dc12183f6e92ccd012229ade3449c2dc437e8487f2e2911b461c4785b544"
+  },
+  "id": "tWmyMzEgW9BFZt76",
+  "tags": []
+}

@@ -1,0 +1,114 @@
+{
+  "name": "Agent-Pricing",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "agent-pricing",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "552053f1-cee4-4335-bdad-acae78813955",
+      "name": "Webhook",
+      "webhookId": "efa1e77b-a1c6-4970-b2b6-0779fd3c0fff"
+    },
+    {
+      "parameters": {
+        "jsCode": "const service = $json.body.service;\nconst zip = $json.body.zip;\nconst urgency = $json.body.urgency;\nlet base = $json.catalog[service] ?? 120;\nlet travel = 20;\nif (zip === \"76706\") travel = 0;\nif (zip === \"76708\") travel = 10;\n\nlet subtotal = base + travel;\nlet rush = urgency === \"high\" ? Math.round(subtotal * 0.2) : 0;\n\nreturn [{\n  estimate: subtotal + rush,\n  breakdown: { base, travel, rush },\n  currency: \"USD\"\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "6ee606fc-1eaf-4b7e-b27e-a9de62cc4f54",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{  $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        624,
+        0
+      ],
+      "id": "d084a0d6-5972-426c-b09a-b88e866a78d9",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"catalog\": {\n  \"faucet_replace\": 120,\n  \"ceiling_fan_install\": 150,\n  \"tv_mount\": 140,\n  \"garbage_disposal_replace\": 160\n}\n}",
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "e876a4b9-a4a5-4a7c-ad19-04cbab848d20",
+      "name": "Catalog"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Catalog",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Catalog": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "8a38de58-eaba-43a3-93b6-75116db38a3a",
+  "meta": {
+    "instanceId": "38f3dc12183f6e92ccd012229ade3449c2dc437e8487f2e2911b461c4785b544"
+  },
+  "id": "K6tf1nnD042AVYQj",
+  "tags": []
+}

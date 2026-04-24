@@ -1,0 +1,1000 @@
+{
+  "name": "Mid-Term Handyman Project",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "947a8ccd-c45e-412d-98a2-dbfecfec4433",
+              "name": "agent",
+              "value": "={{ $json }}",
+              "type": "object"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        608,
+        80
+      ],
+      "id": "35830e2e-87e1-4999-a6c4-2157c568347f",
+      "name": "Store Job"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://blacknet.app.n8n.cloud/webhook/agent-intake",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "message",
+              "value": "={{ $json.description}}"
+            }
+          ]
+        },
+        "options": {
+          "response": {}
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        192,
+        80
+      ],
+      "id": "4c18a9fa-5b66-4ad5-908c-4ae1411e9447",
+      "name": "Call Intake Agent",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://blacknet.app.n8n.cloud/webhook/agent-pricing",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "service",
+              "value": "={{ $json.service }}"
+            },
+            {
+              "name": "zip",
+              "value": "={{ $json.zip }}"
+            },
+            {
+              "name": "urgency",
+              "value": "={{ $json.urgency }}"
+            },
+            {
+              "name": "full_name",
+              "value": "={{ $json[\"Client's Full Name\"] }}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $json[\"Client's Email\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        816,
+        80
+      ],
+      "id": "001b4ed7-2d55-4e14-8bcb-3790a217d127",
+      "name": "Call Pricing Agent"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "52c31923-8eb6-42c0-8fdd-e8604ab81d45",
+              "name": "pricing",
+              "value": "={{ $json }}",
+              "type": "object"
+            },
+            {
+              "id": "f4d61646-4c2a-4ead-a32a-85143f7b36e1",
+              "name": "job",
+              "value": "={{ $node[\"Store Job\"].json }}",
+              "type": "object"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1040,
+        80
+      ],
+      "id": "a810a715-0201-4166-a105-d88689fbc5d5",
+      "name": "Store Pricing"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://blacknet.app.n8n.cloud/webhook/agent-scheduling",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "preferred_days",
+              "value": "={{  $json.job.preferred_days }} "
+            },
+            {
+              "name": "job",
+              "value": "={{  $json.job }}"
+            },
+            {
+              "name": "pricing",
+              "value": "={{  $json.pricing }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1264,
+        80
+      ],
+      "id": "9d001461-477e-4f32-9ab7-a27689638706",
+      "name": "Call Scheduling"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "75f13b74-cf43-4a0c-8647-36aecde30a9d",
+              "name": "scheduling",
+              "value": "={{$json.scheduling}}",
+              "type": "object"
+            },
+            {
+              "id": "588416e4-1609-41e4-b556-0602b6b10029",
+              "name": "job",
+              "value": "={{$json.job}}",
+              "type": "object"
+            },
+            {
+              "id": "834ca627-0d0f-4ed3-8ec9-006880b3729a",
+              "name": "pricing",
+              "value": "={{$node[\"Store Pricing\"].json.pricing}}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1856,
+        96
+      ],
+      "id": "1b8c56ef-91ce-476f-8a47-8bd0b445602b",
+      "name": "Store Scheduling"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse the scheduling agent response\n// Try to parse as JSON if possible, otherwise extract JSON from text, or return raw text\n\nconst items = $input.all();\nconst results = [];\n\nfor (const item of items) {\n  let parsed;\n  const data = item.json;\n  \n  // If data is already an object (not a string), return it as-is\n  if (typeof data === 'object' && data !== null) {\n    results.push({ json: data });\n    continue;\n  }\n  \n  // If data is a string, try to parse it\n  let textData = typeof data === 'string' ? data : JSON.stringify(data);\n  \n  try {\n    // First, try direct JSON parse\n    parsed = JSON.parse(textData);\n    results.push({ json: parsed });\n  } catch (e) {\n    // If direct parse fails, try to extract JSON from text\n    const jsonMatch = textData.match(/\\{[\\s\\S]*\\}/);\n    if (jsonMatch) {\n      try {\n        parsed = JSON.parse(jsonMatch[0]);\n        results.push({ json: parsed });\n      } catch (e2) {\n        // If extraction fails, return raw text wrapped in object\n        results.push({ json: { raw_response: textData } });\n      }\n    } else {\n      // No JSON found, return raw text wrapped in object\n      results.push({ json: { raw_response: textData } });\n    }\n  }\n}\n\nreturn results;"
+      },
+      "id": "3b742fc1-a7f5-4140-a526-650d57e9ee4b",
+      "name": "Parse Scheduling Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1C0eBoxEs4OEVmcM33zL9A7Bh2IGeipY-JThcpodZNGs",
+          "mode": "list",
+          "cachedResultName": "Handyman Service Request - Response",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1C0eBoxEs4OEVmcM33zL9A7Bh2IGeipY-JThcpodZNGs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 90481481,
+          "mode": "list",
+          "cachedResultName": "Form Responses 2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1C0eBoxEs4OEVmcM33zL9A7Bh2IGeipY-JThcpodZNGs/edit#gid=90481481"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -256,
+        80
+      ],
+      "id": "5cedb400-b903-4edf-b458-67a7585bc7f4",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "YgHqZV2Cm11TIVH2",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "332bbf05-b667-4004-b37c-3d89d999cbe8",
+              "name": "name",
+              "value": "={{ $json[\"Client's Full Name\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "41fe4f29-b309-4d10-9bd0-5534b4a4ba2e",
+              "name": "email",
+              "value": "={{ $json[\"Client's Email\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "cf68b57e-6e95-4b3c-8ef3-8faaca631ae3",
+              "name": "address",
+              "value": "={{ $json[\"Service Address\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "3044c7f7-4811-43ca-8043-916af798ee31",
+              "name": "description",
+              "value": "={{ $json[\"Description of service need including available dates and times\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "c9020333-93a0-4aca-ae2c-edb96d98f843",
+              "name": "first_name",
+              "value": "={{ $json[\"Client's Full Name\"].split(\" \")[0] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -32,
+        80
+      ],
+      "id": "20925f07-7cc9-47cf-b264-04a29af5f1f3",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "998fa2a4-8452-4b6b-a684-0496f19083e6",
+              "leftValue": "={{ $json.job.urgency }}",
+              "rightValue": "high",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "b5f0be51-f936-4788-b979-dadd3ffc1257",
+              "leftValue": "={{ $json.pricing.estimate }}",
+              "rightValue": 300,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2048,
+        96
+      ],
+      "id": "06ff6896-53af-4963-bd97-cc64cba8c0bb",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://blacknet.app.n8n.cloud/webhook/agent-comms",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=job",
+              "value": "={{ $json.job }}"
+            },
+            {
+              "name": "pricing",
+              "value": "={{ $json.pricing }}"
+            },
+            {
+              "name": "scheduling",
+              "value": "={{$json.scheduling}} "
+            },
+            {
+              "name": "mode",
+              "value": "client"
+            },
+            {
+              "name": "full_name",
+              "value": "=$json.job[\"Client's Full Name\"]"
+            },
+            {
+              "name": "email",
+              "value": "={{ $json.job[\"Client's Email\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        2288,
+        800
+      ],
+      "id": "3468e6e2-9a47-4c6f-a9f4-ffdb70a86343",
+      "name": "Call Comms Agent (Client)"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a6b1783c-c364-4a1d-a28b-4c7cead78bf6",
+              "name": "subject",
+              "value": "=Service Confirmation - {{ $json.job[\"service\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "4f2025f7-7686-4381-a80f-10c30f056cac",
+              "name": "body",
+              "value": "=Hi {{ $json.job[\"Client's Full Name\"] }},\n\nYour service to replace a faucet at {{ $json.job[\"Service Address\"] }} has been confirmed.\n\nEstimated cost: ${{ $json.pricing.estimate }}.\n\nWe will contact you shortly with scheduling details.\n\nThank you!",
+              "type": "string"
+            },
+            {
+              "id": "37edeb64-1788-4976-ae6a-8e7eed6e918a",
+              "name": "email",
+              "value": "={{ $json.job[\"Client's Email\"] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2336,
+        176
+      ],
+      "id": "0f6b19dc-e0e2-47a3-a6ac-0691b0fbe534",
+      "name": "Store Comms (Client)"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://blacknet.app.n8n.cloud/webhook/agent-comms",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=job",
+              "value": "={{ $json.job }}"
+            },
+            {
+              "name": "pricing",
+              "value": "={{ $json.pricing }}"
+            },
+            {
+              "name": "scheduling",
+              "value": "={{$json.scheduling}} "
+            },
+            {
+              "name": "mode",
+              "value": "operations"
+            },
+            {
+              "name": "first_name",
+              "value": "={{ $json.first_name }}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $json.email }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {}
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        2512,
+        800
+      ],
+      "id": "3f9f63e8-79e1-4363-b6f9-c41592fafe59",
+      "name": "Call Comms Agent Operations"
+    },
+    {
+      "parameters": {
+        "sendTo": "ayokunmi84@gmail.com",
+        "subject": "={{ $json.subject }}",
+        "emailType": "text",
+        "message": "={{ $json.body }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2960,
+        800
+      ],
+      "id": "757949d6-b2d8-4b5c-a227-1747de43e3ae",
+      "name": "Send a message1",
+      "webhookId": "dff3e529-bfee-45a0-ae58-3125eca8e158",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "C63lkR9uW9VNSeQk",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1504,
+        96
+      ],
+      "id": "2ad7b67e-053b-472b-8029-0ed2dfd3362e",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        416,
+        80
+      ],
+      "id": "d8990de5-ad10-4845-986b-79c3bd410cc9",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a6b1783c-c364-4a1d-a28b-4c7cead78bf6",
+              "name": "subject",
+              "value": "=Handyman Service Confirmation",
+              "type": "string"
+            },
+            {
+              "id": "4f2025f7-7686-4381-a80f-10c30f056cac",
+              "name": "body",
+              "value": "={{ $json.message }}",
+              "type": "string"
+            },
+            {
+              "id": "37edeb64-1788-4976-ae6a-8e7eed6e918a",
+              "name": "email",
+              "value": "={{ $json.job[\"Client's Email\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "477fb17e-f907-4e2d-9b21-1754f2accee2",
+              "name": "comms",
+              "value": "={{ $json }}",
+              "type": "string"
+            },
+            {
+              "id": "92d76cc3-2c9f-47d7-bc10-465098f6bc65",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2048,
+        800
+      ],
+      "id": "9f065d41-0b82-4d13-bc4b-7784ac42db8b",
+      "name": "Restore Context"
+    },
+    {
+      "parameters": {
+        "sendTo": "=To: {{ $json.job[\"Client's Email\"] }}",
+        "subject": "=Service Confirmation",
+        "emailType": "text",
+        "message": "=Hi {{ $json.job[\"Client's Full Name\"] }},\n\nYour service to replace a faucet at {{ $json.job[\"Service Address\"] }} has been confirmed.\n\nEstimated cost: ${{ $json.pricing.estimate }}.\n\nWe will contact you shortly with scheduling details.\n\nThank you!",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1824,
+        800
+      ],
+      "id": "38e86dcf-8915-4d97-8012-25da6b849707",
+      "name": "Send a message - Copy",
+      "webhookId": "dff3e529-bfee-45a0-ae58-3125eca8e158",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "C63lkR9uW9VNSeQk",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.job[\"Client's Email\"] }}",
+        "subject": "=Service Confirmation – {{ $json.job.service.replace(/\\b\\w/g, c => c.toUpperCase()) }}",
+        "emailType": "text",
+        "message": "=Hi {{ $json.job[\"Client's Full Name\"].split(\" \")[0] }},\n\nThank you for contacting us regarding your {{ $json.job.service.replace(/\\b\\w/g, c => c.toUpperCase()) }} at {{ $json.job[\"Service Address\"] }}.\n\nWe’ve reviewed your request and prepared the details below for confirmation.\n\n----------------------------------------\nSERVICE SUMMARY\n----------------------------------------\nService Requested: {{ $json.job.service.replace(/\\b\\w/g, c => c.toUpperCase()) }}\nLocation: {{ $json.job[\"Service Address\"] }}\nUrgency Level: {{ $json.job.urgency.toUpperCase() }}\nEstimated Cost: ${{ $json.pricing.estimate }} {{ $json.pricing.currency }}\n\n----------------------------------------\nPROPOSED APPOINTMENT TIMES\n----------------------------------------\n{{ $json.scheduling.proposed_slots.join(\"\\n\") }}\n\nArrival Window: 2 hours\n\n----------------------------------------\nNEXT STEPS\n----------------------------------------\nPlease reply to this email with your preferred time slot to confirm your appointment.\n\nIf this requires immediate attention, feel free to let us know and we will prioritize accordingly.\n\nWe appreciate the opportunity to assist you and look forward to resolving this for you.\n\nKind regards,  \nService Team",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2544,
+        176
+      ],
+      "id": "537789cf-b3dc-436c-93e5-9aa0b267e50d",
+      "name": "Send a message client",
+      "webhookId": "dff3e529-bfee-45a0-ae58-3125eca8e158",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "C63lkR9uW9VNSeQk",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.job[\"Client's Email\"] }}",
+        "subject": "=NEW SERVICE REQUEST – {{ $json.job.service.replace(/\\b\\w/g, c => c.toUpperCase()) }} – {{ $json.job.urgency.toUpperCase() }}",
+        "emailType": "text",
+        "message": "=New Service Request Submitted\n\n----------------------------------------\nCLIENT DETAILS\n----------------------------------------\nName: {{ $json.job[\"Client's Full Name\"] }}\nEmail: {{ $json.job[\"Client's Email\"] }}\n\n----------------------------------------\nSERVICE DETAILS\n----------------------------------------\nService: {{ $json.job.service.replace(/\\b\\w/g, c => c.toUpperCase()) }}\nAddress: {{ $json.job[\"Service Address\"] }}\nUrgency: {{ $json.job.urgency.toUpperCase() }}\n\n----------------------------------------\nDIAGNOSTIC NOTES\n----------------------------------------\n{{ $json.job.notes }}\n\n----------------------------------------\nPRICING ESTIMATE\n----------------------------------------\n${{ $json.pricing.estimate }} {{ $json.pricing.currency }}\n\n----------------------------------------\nPROPOSED SLOTS\n----------------------------------------\n{{ $json.scheduling.proposed_slots.join(\"\\n\") }}\n\nAction Required:\n• Assign technician\n• Confirm availability\n• Update calendar system",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2544,
+        0
+      ],
+      "id": "27c73033-929a-487b-a9e8-8a5c6fa2e22d",
+      "name": "Send a message operations",
+      "webhookId": "dff3e529-bfee-45a0-ae58-3125eca8e158",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "C63lkR9uW9VNSeQk",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a80c2d5b-9e33-401a-8988-6777375b74af",
+              "name": "comms",
+              "value": "={{$json}}",
+              "type": "object"
+            },
+            {
+              "id": "0f49a91d-ec3b-453d-a21e-561c6359d91f",
+              "name": "job",
+              "value": "={{$node[\"Store Job\"].json.job}}",
+              "type": "object"
+            },
+            {
+              "id": "5d797e4b-abb2-4717-a6ba-3dc029cae28d",
+              "name": "pricing",
+              "value": "={{$node[\"Store Pricing\"].json.pricing}}",
+              "type": "object"
+            },
+            {
+              "id": "a6b1783c-c364-4a1d-a28b-4c7cead78bf6",
+              "name": "subject",
+              "value": "={{ $json.subject }}",
+              "type": "string"
+            },
+            {
+              "id": "83819ca1-6974-4b88-a031-ad5a388f0c5a",
+              "name": "body",
+              "value": "={{ $json.body }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2736,
+        800
+      ],
+      "id": "66463a1c-bcd9-4315-b0ee-7c78c5edf189",
+      "name": "Store Comms (Operations2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a6b1783c-c364-4a1d-a28b-4c7cead78bf6",
+              "name": "subject",
+              "value": "=NEW SERVICE REQUEST – {{ $json.job.service.replace(/\\b\\w/g, c => c.toUpperCase()) }} – {{ $json.job.urgency.toUpperCase() }}",
+              "type": "string"
+            },
+            {
+              "id": "4f2025f7-7686-4381-a80f-10c30f056cac",
+              "name": "body",
+              "value": "=New Service Request Submitted\n\n----------------------------------------\nCLIENT DETAILS\n----------------------------------------\nName: {{ $json.job[\"Client's Full Name\"] }}\nEmail: {{ $json.job[\"Client's Email\"] }}\n\n----------------------------------------\nSERVICE DETAILS\n----------------------------------------\nService: {{ $json.job.service.replace(/\\b\\w/g, c => c.toUpperCase()) }}\nAddress: {{ $json.job[\"Service Address\"] }}\nUrgency: {{ $json.job.urgency.toUpperCase() }}\n\n----------------------------------------\nDIAGNOSTIC NOTES\n----------------------------------------\n{{ $json.job.notes }}\n\n----------------------------------------\nPRICING ESTIMATE\n----------------------------------------\n${{ $json.pricing.estimate }} {{ $json.pricing.currency }}\n\n----------------------------------------\nPROPOSED SLOTS\n----------------------------------------\n{{ $json.scheduling.proposed_slots.join(\"\\n\") }}\n\nAction Required:\n• Assign technician\n• Confirm availability\n• Update calendar system",
+              "type": "string"
+            },
+            {
+              "id": "37edeb64-1788-4976-ae6a-8e7eed6e918a",
+              "name": "email",
+              "value": "={{ $json.job[\"Client's Email\"] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2336,
+        0
+      ],
+      "id": "1f7a2430-2453-49a0-a35a-822c9b537449",
+      "name": "Store Comms (Operations)"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Call Intake Agent": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Store Job": {
+      "main": [
+        [
+          {
+            "node": "Call Pricing Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Pricing Agent": {
+      "main": [
+        [
+          {
+            "node": "Store Pricing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Pricing": {
+      "main": [
+        [
+          {
+            "node": "Call Scheduling",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Scheduling": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Store Scheduling": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Scheduling Response": {
+      "main": [
+        [
+          {
+            "node": "Store Scheduling",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Call Intake Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Comms Agent (Client)": {
+      "main": [
+        []
+      ]
+    },
+    "Store Comms (Client)": {
+      "main": [
+        [
+          {
+            "node": "Send a message client",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Store Comms (Operations)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Store Comms (Client)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Comms Agent Operations": {
+      "main": [
+        [
+          {
+            "node": "Store Comms (Operations2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Parse Scheduling Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Store Job",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Restore Context": {
+      "main": [
+        []
+      ]
+    },
+    "Send a message - Copy": {
+      "main": [
+        []
+      ]
+    },
+    "Send a message client": {
+      "main": [
+        []
+      ]
+    },
+    "Store Comms (Operations2": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Comms (Operations)": {
+      "main": [
+        [
+          {
+            "node": "Send a message operations",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "cee34f31-9a8e-4bbc-9e8c-c951db9e3965",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "38f3dc12183f6e92ccd012229ade3449c2dc437e8487f2e2911b461c4785b544"
+  },
+  "id": "pVzDuFwVqQfs9Lqb",
+  "tags": []
+}

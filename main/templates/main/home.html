@@ -1,0 +1,225 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero-content">
+    <div class="hero-avatar">
+      <img src="{% static 'main/images/ayokunmi-photo.jpg' %}" alt="Ayokunmi Sodamola" />
+    </div>
+    <h1>Hi, I'm Ayokunmi Sodamola</h1>
+    <p class="hero-subtitle">Builder | Product Manager | Growth-Driven Strategist</p>
+    <p class="hero-tagline">From Idea to Scalable Product — Research, Strategy &amp; AI</p>
+    <p class="hero-location">Based in Texas | I work with cross-functional teams to deliver products for startups and multi-national brands, leveraging qualitative research and product strategy to drive growth and create impactful user experiences.</p>
+
+    <div class="hero-banner">
+      <div class="hero-banner-title">📣 Open to New Opportunities</div>
+      <p>Let's build something impactful together! Seeking roles in Product Management, Program Management, Data Analysis, Strategy, or Innovation.</p>
+    </div>
+
+    <div class="hero-ctas">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="#contact" class="btn btn-outline">Contact Me</a>
+    </div>
+
+    <div class="hero-socials">
+      <a href="https://github.com/ayokunmi24" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12a11.5 11.5 0 0 0 7.86 10.93c.58.1.79-.25.79-.55v-2c-3.2.7-3.88-1.36-3.88-1.36-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.02 1.76 2.68 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.23-1.28-5.23-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.51-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.77.11 3.06.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.25 5.68.41.35.77 1.04.77 2.11v3.13c0 .3.21.66.8.55A11.5 11.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/ayokunmis" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14Zm1.78 13.02H3.56V9h3.56v11.45ZM22.22 0H1.78C.8 0 0 .78 0 1.74v20.52C0 23.22.8 24 1.78 24h20.44c.98 0 1.78-.78 1.78-1.74V1.74C24 .78 23.2 0 22.22 0Z"/></svg>
+      </a>
+      <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+      <a href="mailto:ayokunmi84@gmail.com" aria-label="Email">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-header">
+      <h2>About Me</h2>
+      <p>I'm a passionate Product Manager with extensive experience working with cross-functional teams to deliver products for startups and multi-national brands with a customer-first mindset.</p>
+    </div>
+    <div class="about-grid">
+      <div>
+        <h3>My Journey</h3>
+        <p>I have spent the last years working with cross-functional teams to deliver products for startups and multi-national brands like Leadway, Qore, Metro Africa Xpress (MAX), leveraging qualitative research and product strategy to drive growth.</p>
+        <p>Outside my product domain, I am also studying the underpinnings of Business Management, Cloud and Emerging technologies like AI and Blockchain out of a sheer curiosity.</p>
+        <a href="{% url 'about_me' %}" class="btn btn-outline">Read More</a>
+      </div>
+      <div class="highlight-cards">
+        <div class="highlight-card">
+          <div class="icon">🤝</div>
+          <h4>Co-creating Solutions</h4>
+          <p>I involve stakeholders early and often to understand business &amp; user needs, ideate solutions, and gather feedback.</p>
+        </div>
+        <div class="highlight-card">
+          <div class="icon">🔍</div>
+          <h4>Always Asking Why</h4>
+          <p>I approach every project with curiosity to uncover hidden insights and make new discoveries.</p>
+        </div>
+        <div class="highlight-card">
+          <div class="icon">⚡</div>
+          <h4>Creator. Partner. Collaborator</h4>
+          <p>I can spearhead, support or polish your project or product at any stage it needs it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-header">
+      <h2>Skills &amp; Technologies</h2>
+      <p>Here are the technologies I work with to bring ideas to life</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h3>Core Competencies</h3>
+        <div class="skill-tags">
+          <span class="tag">Product Discovery</span>
+          <span class="tag">Product Design</span>
+          <span class="tag">User Experience</span>
+          <span class="tag">Agile (SCRUM)</span>
+          <span class="tag">Database Modeling</span>
+          <span class="tag">AI/ML Product Strategy</span>
+          <span class="tag">Data Analysis</span>
+          <span class="tag">Machine Learning</span>
+          <span class="tag">Business Analysis</span>
+          <span class="tag">Change Management</span>
+          <span class="tag">Process Optimization</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>Programming Languages</h3>
+        <div class="skill-tags">
+          <span class="tag">Python</span>
+          <span class="tag">SQL</span>
+          <span class="tag">R</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">HTML</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>Technologies &amp; Tools</h3>
+        <div class="skill-tags">
+          <span class="tag">Google Analytics</span>
+          <span class="tag">Jira</span>
+          <span class="tag">PowerBI</span>
+          <span class="tag">Excel</span>
+          <span class="tag">Figma</span>
+          <span class="tag">Visio</span>
+          <span class="tag">Tableau</span>
+          <span class="tag">PowerPoint</span>
+          <span class="tag">MS Project</span>
+          <span class="tag">Confluence</span>
+          <span class="tag">Linux</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-header">
+      <h2>Work</h2>
+      <p>A showcase of my recent work and personal projects</p>
+    </div>
+    <div class="projects-grid">
+      {% for p in projects %}
+        <article class="project-card">
+          <a href="{% url 'project_detail' p.slug %}" class="thumb">
+            <img src="{% static 'main/images/' %}{{ p.image }}" alt="{{ p.title }}" loading="lazy" />
+          </a>
+          <div class="body">
+            <h3>{{ p.title }}</h3>
+            <p>{{ p.short_description }}</p>
+            <div class="tags">
+              {% for t in p.technologies %}<span class="tag">{{ t }}</span>{% endfor %}
+            </div>
+            <div class="actions">
+              <a href="{% url 'project_detail' p.slug %}" class="btn btn-outline">Case Study</a>
+              {% if p.live_url %}
+                <a href="{{ p.live_url }}" target="_blank" rel="noopener" class="btn btn-ghost">Live ↗</a>
+              {% endif %}
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header">
+      <h2>Get In Touch</h2>
+      <p>Have a project in mind? Let's discuss how we can work together.</p>
+    </div>
+
+    {% if messages %}
+      {% for m in messages %}<div class="flash">{{ m }}</div>{% endfor %}
+    {% endif %}
+
+    <div class="contact-grid">
+      <form class="contact-form" method="post" action="{% url 'home' %}#contact">
+        {% csrf_token %}
+        <h3>Send me a message</h3>
+
+        <label for="id_name">Name</label>
+        <input type="text" name="name" id="id_name" required value="{{ form.name.value|default:'' }}" />
+        {% if form.name.errors %}<div class="errors">{{ form.name.errors|join:" " }}</div>{% endif %}
+
+        <label for="id_email">Email</label>
+        <input type="email" name="email" id="id_email" required value="{{ form.email.value|default:'' }}" />
+        {% if form.email.errors %}<div class="errors">{{ form.email.errors|join:" " }}</div>{% endif %}
+
+        <label for="id_message">Message</label>
+        <textarea name="message" id="id_message" rows="5" required placeholder="Tell me about your project...">{{ form.message.value|default:'' }}</textarea>
+        {% if form.message.errors %}<div class="errors">{{ form.message.errors|join:" " }}</div>{% endif %}
+
+        <button type="submit" class="btn btn-primary" style="width:100%;">Send Message</button>
+      </form>
+
+      <div class="contact-info">
+        <h3>Let's Connect</h3>
+        <p>I'm always interested in new opportunities and collaborations. Whether you have a project in mind or just want to chat about technology, feel free to reach out!</p>
+
+        <a href="mailto:ayokunmi84@gmail.com" class="contact-card">
+          <div class="icon">✉️</div>
+          <div>
+            <div class="label">Email</div>
+            <div class="value">ayokunmi84@gmail.com</div>
+          </div>
+        </a>
+        <a href="tel:+12542146624" class="contact-card">
+          <div class="icon">📞</div>
+          <div>
+            <div class="label">Phone</div>
+            <div class="value">+1 (254) 214-6624</div>
+          </div>
+        </a>
+        <div class="contact-card">
+          <div class="icon">📍</div>
+          <div>
+            <div class="label">Location</div>
+            <div class="value">Texas, US</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

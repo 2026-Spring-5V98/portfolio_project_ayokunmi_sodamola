@@ -1,0 +1,112 @@
+{
+  "name": "Agent-Scheduling",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "agent-scheduling",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "fee5e8f4-8c73-4803-b327-2c7693efdefe",
+      "name": "Webhook",
+      "webhookId": "463eaa04-6592-4b2d-8bbd-901285f9cc23"
+    },
+    {
+      "parameters": {
+        "url": "https://timeapi.io/api/Time/current/zone?timeZone=America/Chicago",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "6b7baf2f-96d9-4348-8027-e54dc87a2b7f",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "const preferred = $json.job?.preferred_days || [];\n\nconst slots = [\n  \"Thu 4:30pm\",\n  \"Thu 5:30pm\",\n  \"Sat 9:00am\",\n  \"Sat 10:30am\",\n  \"Sun 1:00pm\"\n];\n\nlet filtered = slots;\n\nif (preferred.length > 0) {\n  filtered = slots.filter(s =>\n    preferred.some(d => s.toLowerCase().startsWith(d.toLowerCase().substring(0,3)))\n  );\n}\n\nreturn [\n  {\n    json: {\n      scheduling: {\n        proposed_slots: filtered.slice(0, 3),\n        note: \"Reply with a slot to confirm. Arrival window is 2 hours.\"\n      }\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "5545a5db-30e4-41ff-8b95-c56e9b2f9da6",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        624,
+        0
+      ],
+      "id": "b6df429e-bdd4-4a82-898a-2711d4dfce3f",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "da751f92-ac1f-4724-96fb-abe75443dbf6",
+  "meta": {
+    "instanceId": "38f3dc12183f6e92ccd012229ade3449c2dc437e8487f2e2911b461c4785b544"
+  },
+  "id": "VkldAZKCfWJp30IB",
+  "tags": []
+}
