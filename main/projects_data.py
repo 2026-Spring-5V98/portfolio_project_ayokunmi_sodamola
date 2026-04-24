@@ -444,6 +444,43 @@ PROJECTS = [
             "Delivered a complete end-to-end business automation as a graduate-coursework mid-term project, from form ingestion to differentiated client and operations email outputs",
         ],
     },
+    {
+        "slug": "shift",
+        "title": "Shift — Volunteer Marketplace (WACODE Hackathon)",
+        "detail_title": "Shift — Volunteer Marketplace (WACODE 2026 Hackathon)",
+        "short_description": "Two-sided volunteer marketplace — 'the DoorDash for volunteering' — built in 24 hours and placed 4th at WACODE 2026 (Baylor University). Nonprofits publish shifts; students browse a ranked feed, claim in two taps, and join a smart waitlist with automated promotion.",
+        "image": "shift-cover.png",
+        "live_url": "https://shiftbear-five.vercel.app",
+        "role": "Product Manager & Co-Builder",
+        "company": "WACODE 2026 — Baylor University",
+        "industry": "Hackathon, Social Good, Two-Sided Marketplace",
+        "technologies": ["Next.js 16", "TypeScript", "React 19", "Tailwind v4", "PostgreSQL (Neon)", "Resend", "Magic-Link Auth", "Vercel", "Remotion"],
+        "overview": "Shift is a two-sided volunteer marketplace — 'the DoorDash for volunteering' — that connects nonprofits with student volunteers who need flexible, nearby ways to give back. Nonprofits publish shifts with time, location, and capacity; students browse a personalized feed ranked for their schedule and proximity, claim slots in two taps, and join a smart waitlist that auto-promotes the next person (with a 30-minute confirmation window) when someone drops. Built in 24 hours for WACODE 2026 at Baylor University by a team of two — Ayokunmi Sodamola (PM & co-builder) and Kolade Abobarin (co-builder) — where it placed 4th.",
+        "challenges": [
+            "Scoping a real two-sided marketplace (nonprofit admin flows + student claim flows + email + cron + auth) tight enough to actually ship end-to-end in a 24-hour window",
+            "Avoiding the 'fake auth' shortcut — we wanted real magic-link authentication with hashed tokens and HTTP-only session cookies, not a mocked login for the demo",
+            "Handling waitlist race conditions atomically — when a slot opens, two students could hit the promotion endpoint simultaneously and double-book the spot",
+            "Working around Vercel Hobby's lack of scheduled cron — the waitlist expiry and 2-hour reminder jobs couldn't run on a timer on free tier, but needed to exist for the product to work",
+            "Serving two very different audiences (students on phones claiming shifts; nonprofit admins on laptops publishing and tracking attendance) from one codebase without fragmenting into two apps",
+            "Producing a compelling 60-second demo video for judging in the final hour without any traditional video tooling or editing experience",
+        ],
+        "solutions": [
+            "Built on Next.js 16 App Router with React Server Components and Tailwind v4, giving us a single design system across student and admin UIs and fast shipping velocity",
+            "Used postgres.js tagged-template SQL against Neon Postgres, wrapping claim and waitlist operations in sql.begin() transactions to atomically serialize state changes and prevent double-booking",
+            "Built real magic-link auth: token hashing at rest, HTTP-only session cookies, and a proxy.ts request-level middleware gating /student and /admin routes — no client-stored JWTs, no mocked sessions",
+            "Integrated Resend for transactional email (claim confirmations, waitlist promotions, 2-hour reminders) with an email_log table for idempotency so retries never double-send",
+            "Stubbed the scheduled cron job in vercel.json with a documented upgrade path to Vercel Pro (/api/cron/run every 5 minutes); kept it manually invokable via curl with a bearer secret so judges could trigger waitlist expiry live",
+            "Designed a single codebase with cleanly separated /student/* and /admin/* route trees sharing the auth and DB layers — one deployment, two experiences",
+            "Generated the entire promo video in Remotion + Claude Code in under 60 minutes — React-coded animations with Claude iterating the slide copy and styling in a tight feedback loop — and published alongside the build to LinkedIn",
+        ],
+        "impact": [
+            "Placed 4th at WACODE 2026 (24-hour hackathon, Baylor University, theme: 'technology for social good')",
+            "Shipped a production-ready two-sided marketplace — not a hackathon prototype — with real auth, transactional database, transactional email, and a documented path to scheduled cron",
+            "Tackled a real community problem in Waco, TX: reduced friction for local nonprofits (Meals on Wheels, Mission Waco) to recruit and for students to volunteer on their actual schedules",
+            "Released a Remotion + Claude Code demo-video workflow that resonated with the tech community on LinkedIn (31 reactions, 7 comments) — reframing creative work as a code problem",
+            "Live and publicly usable at shiftbear-five.vercel.app; code open-sourced at github.com/Bobarinn/ShiftBear",
+        ],
+    },
 ]
 
 PROJECTS_BY_SLUG = {p["slug"]: p for p in PROJECTS}
