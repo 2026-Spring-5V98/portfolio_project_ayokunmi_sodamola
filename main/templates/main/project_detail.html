@@ -29,6 +29,9 @@
     {% if project.live_url %}
       <a href="{{ project.live_url }}" target="_blank" rel="noopener" class="btn btn-primary">View Live Project ↗</a>
     {% endif %}
+    {% if project.try_it_url %}
+      <a href="{{ project.try_it_url }}" target="_blank" rel="noopener" class="btn btn-primary">Try the Simulation ↗</a>
+    {% endif %}
   </div>
 </section>
 

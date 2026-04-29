@@ -153,6 +153,9 @@
               {% if p.live_url %}
                 <a href="{{ p.live_url }}" target="_blank" rel="noopener" class="btn btn-ghost">Live ↗</a>
               {% endif %}
+              {% if p.try_it_url %}
+                <a href="{{ p.try_it_url }}" target="_blank" rel="noopener" class="btn btn-ghost">Try it ↗</a>
+              {% endif %}
             </div>
           </div>
         </article>
@@ -177,6 +180,10 @@
       <form class="contact-form" method="post" action="{% url 'home' %}#contact">
         {% csrf_token %}
         <h3>Send me a message</h3>
+
+        <label for="id_subject">Subject</label>
+        <input type="text" name="subject" id="id_subject" required value="{{ form.subject.value|default:'' }}" />
+        {% if form.subject.errors %}<div class="errors">{{ form.subject.errors|join:" " }}</div>{% endif %}
 
         <label for="id_name">Name</label>
         <input type="text" name="name" id="id_name" required value="{{ form.name.value|default:'' }}" />

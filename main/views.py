@@ -4,6 +4,7 @@ import time
 from django.conf import settings
 from django.contrib import messages
 from django.core.cache import cache
+from django.core.mail import EmailMessage
 from django.http import Http404, JsonResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
@@ -18,8 +19,35 @@ def home(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
         if form.is_valid():
-            print("[Contact form submission]", form.cleaned_data)
-            messages.success(request, "Thanks — your message has been received.")
+            data = form.cleaned_data
+            email_body = (
+                "Hello Ayokunmi,\n\n"
+                f"You have received a new message via your portfolio website.\n\n"
+                "----------------------------------------\n"
+                f"Subject : {data['subject']}\n"
+                f"From    : {data['name']} <{data['email']}>\n"
+                "----------------------------------------\n\n"
+                "Message:\n"
+                f"{data['message']}\n\n"
+                "----------------------------------------\n"
+                f"You can reply directly to this email to respond to {data['name']}.\n\n"
+                "— Portfolio Contact Form"
+            )
+            try:
+                EmailMessage(
+                    subject=f"[Portfolio] {data['subject']}",
+                    body=email_body,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to=[settings.CONTACT_RECIPIENT_EMAIL],
+                    reply_to=[data["email"]],
+                ).send(fail_silently=False)
+                messages.success(request, "Thanks — your message has been sent.")
+            except Exception as exc:
+                print("[Contact form] email error:", exc)
+                messages.error(
+                    request,
+                    "Sorry, your message could not be sent right now. Please try again later.",
+                )
             return redirect(request.path + "#contact")
 
     return render(request, "main/home.html", {

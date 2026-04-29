@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FBFAF6"/>
+      <stop offset="100%" stop-color="#EFEDE6"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#107266" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#107266" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.5" fill="#107266" fill-opacity="0.06"/>
+    </pattern>
+    <linearGradient id="frameSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1B2330"/>
+      <stop offset="55%" stop-color="#3E2F4E"/>
+      <stop offset="100%" stop-color="#7A4F4A"/>
+    </linearGradient>
+    <linearGradient id="frameGround" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7A4F4A"/>
+      <stop offset="100%" stop-color="#2A1F22"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFD89B" stop-opacity="0.95"/>
+      <stop offset="60%" stop-color="#F6A56A" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#F6A56A" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="frameShadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="22"/>
+      <feOffset dx="0" dy="16" result="off"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.20"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <rect width="1600" height="1000" fill="url(#dots)"/>
+  <circle cx="800" cy="500" r="640" fill="url(#glow)"/>
+
+  <g transform="translate(180, 110)" filter="url(#frameShadow)">
+    <rect width="1240" height="780" rx="20" fill="#0F1316" stroke="#0A0D10" stroke-width="1"/>
+
+    <g transform="translate(20, 20)">
+      <rect width="1200" height="640" rx="12" fill="url(#frameSky)"/>
+
+      <circle cx="900" cy="190" r="140" fill="url(#sun)"/>
+      <circle cx="900" cy="190" r="42" fill="#FFE0B0" fill-opacity="0.85"/>
+
+      <g fill="#1A1F28" fill-opacity="0.55">
+        <polygon points="0,420 180,300 320,360 480,260 640,340 820,280 980,360 1140,290 1200,330 1200,420"/>
+      </g>
+      <g fill="#0E1218" fill-opacity="0.75">
+        <polygon points="0,470 220,380 380,430 540,360 700,420 880,370 1040,440 1200,400 1200,520 0,520"/>
+      </g>
+      <rect x="0" y="500" width="1200" height="140" fill="url(#frameGround)"/>
+
+      <g stroke="#2A1F22" stroke-width="1" stroke-opacity="0.4">
+        <line x1="80" y1="530" x2="200" y2="640"/>
+        <line x1="260" y1="530" x2="380" y2="640"/>
+        <line x1="440" y1="530" x2="560" y2="640"/>
+        <line x1="620" y1="530" x2="740" y2="640"/>
+        <line x1="800" y1="530" x2="920" y2="640"/>
+        <line x1="980" y1="530" x2="1100" y2="640"/>
+      </g>
+
+      <rect x="32" y="32" width="160" height="36" rx="18" fill="#000000" fill-opacity="0.45"/>
+      <circle cx="56" cy="50" r="7" fill="#EF4444"/>
+      <text x="74" y="56" font-family="-apple-system, 'SF Pro Text', system-ui, sans-serif" font-size="15" font-weight="600" fill="#FFFFFF">GENERATING</text>
+
+      <rect x="32" y="560" width="640" height="56" rx="14" fill="#000000" fill-opacity="0.55"/>
+      <text x="52" y="595" font-family="-apple-system, 'SF Pro Text', system-ui, sans-serif" font-size="17" fill="#E5E9F0">Cinematic dolly-in across an empty desert at golden hour, low haze, shallow focus.</text>
+
+      <g transform="translate(540, 280)">
+        <circle r="60" fill="#FFFFFF" fill-opacity="0.18"/>
+        <circle r="44" fill="#FFFFFF" fill-opacity="0.95"/>
+        <polygon points="-12,-20 24,0 -12,20" fill="#0F1316"/>
+      </g>
+    </g>
+
+    <g transform="translate(20, 690)">
+      <rect width="1200" height="70" rx="10" fill="#161B21"/>
+
+      <text x="20" y="42" font-family="-apple-system, 'SF Pro Text', system-ui, sans-serif" font-size="14" fill="#7A8088">00:02</text>
+      <text x="1140" y="42" font-family="-apple-system, 'SF Pro Text', system-ui, sans-serif" font-size="14" fill="#7A8088">00:08</text>
+
+      <rect x="80" y="32" width="1040" height="6" rx="3" fill="#2A3038"/>
+      <rect x="80" y="32" width="320" height="6" rx="3" fill="#107266"/>
+      <circle cx="400" cy="35" r="9" fill="#FFFFFF"/>
+
+      <g transform="translate(80, 50)">
+        <rect width="60" height="10" rx="2" fill="#3A4048"/>
+        <rect x="64" width="40" height="10" rx="2" fill="#3A4048"/>
+        <rect x="108" width="80" height="10" rx="2" fill="#3A4048"/>
+        <rect x="192" width="50" height="10" rx="2" fill="#3A4048"/>
+        <rect x="246" width="70" height="10" rx="2" fill="#3A4048"/>
+        <rect x="320" width="55" height="10" rx="2" fill="#3A4048"/>
+        <rect x="379" width="90" height="10" rx="2" fill="#3A4048"/>
+        <rect x="473" width="45" height="10" rx="2" fill="#3A4048"/>
+        <rect x="522" width="65" height="10" rx="2" fill="#3A4048"/>
+        <rect x="591" width="80" height="10" rx="2" fill="#3A4048"/>
+        <rect x="675" width="55" height="10" rx="2" fill="#3A4048"/>
+        <rect x="734" width="70" height="10" rx="2" fill="#3A4048"/>
+        <rect x="808" width="50" height="10" rx="2" fill="#3A4048"/>
+        <rect x="862" width="85" height="10" rx="2" fill="#3A4048"/>
+        <rect x="951" width="60" height="10" rx="2" fill="#3A4048"/>
+        <rect x="1015" width="25" height="10" rx="2" fill="#3A4048"/>
+      </g>
+    </g>
+  </g>
+
+  <g transform="translate(180, 920)" font-family="-apple-system, 'SF Pro Text', system-ui, sans-serif" font-size="18" fill="#5A5A60">
+    <text x="0" y="0">Google Flow · Veo · Text-to-Video · Image-to-Video · Prompt-as-direction</text>
+  </g>
+</svg>
