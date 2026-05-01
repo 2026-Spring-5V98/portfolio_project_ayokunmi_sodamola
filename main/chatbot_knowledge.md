@@ -1,4 +1,4 @@
-# Ayokunmi Sodamola — Knowledge Base for Virtual Assistant
+# Ayokunmi Sodamola - Knowledge Base for Virtual Assistant
 
 This document is the source of truth for answering visitor questions about Ayokunmi on his portfolio website. Ayokunmi uses he/him pronouns.
 
@@ -25,8 +25,8 @@ This document is the source of truth for answering visitor questions about Ayoku
 - Approaches every project with curiosity to uncover hidden insights; involves stakeholders early and often to co-create solutions.
 
 ## Education
-- **Master of Management Information Systems (Data Analytics)** — Baylor University, Waco, US. Expected December 2026. Courses include Database Management, System Design & Analysis, Object Oriented Programming (Python), AI Principles & ML. Program Coordinator at the Hankamer School of Business.
-- **Bachelor of Science in Finance & Applied Mathematics** — University of Lagos, Nigeria.
+- **Master of Management Information Systems (Data Analytics)** - Baylor University, Waco, US. Expected December 2026. Courses include Database Management, System Design & Analysis, Object Oriented Programming (Python), AI Principles & ML. Program Coordinator at the Hankamer School of Business.
+- **Bachelor of Science in Finance & Applied Mathematics** - University of Lagos, Nigeria.
 
 ## Skills & Technologies
 
@@ -41,22 +41,22 @@ Google Analytics, Jira, PowerBI, Excel, Figma, Visio, Tableau, COBOL, PowerPoint
 
 ## Professional Experience
 
-### Research Technology Assistant — Baylor University, Texas, US (Feb 2025 – Present)
+### Research Technology Assistant - Baylor University, Texas, US (Feb 2025 – Present)
 - Conducts system maintenance including software updates, node health checks, and hardware troubleshooting.
 - Monitors CPU/GPU node performance on the Kodiak HPC cluster and escalates anomalies, reducing system downtime by 42%.
 - Delivers Linux and HPC access training to users, improving self-sufficiency and reducing basic support inquiries by 20%.
 
-### Technical Product Manager — MAX, Texas, US (June 2024 – December 2024)
+### Technical Product Manager - MAX, Texas, US (June 2024 – December 2024)
 - Led user feedback sessions and usability studies, driving roadmap prioritization and boosting enterprise subscriptions by 15%.
 - Led cross-functional delivery across engineering, analytics, and product teams (8 members), resolving platform issues by 70%.
 - Redesigned the end-to-end vehicle refurbishment customer journey through competitive research, driving a 20% increase in user engagement and CSAT.
 
-### Associate Product Manager — Qore, Manchester, UK (April 2022 – June 2024)
+### Associate Product Manager - Qore, Manchester, UK (April 2022 – June 2024)
 - Led design and implementation of an agentic AI-powered customer support chatbot using ML and automation, resulting in a 10% increase in recurring revenue.
 - Automated FAQs and routine processes, reducing customer support churn by 40% and saving $50,000 in operational cost.
 - Coordinated engineering and ML teams to deploy an AI-driven customer support system, improving transaction completion by 19%.
 
-### Program Manager — Leadway, London, UK (May 2020 – April 2022)
+### Program Manager - Leadway, London, UK (May 2020 – April 2022)
 - Managed delivery governance for a $2M enterprise program portfolio, aligning engineering, compliance, and operations across workstreams.
 - Implemented and documented ISO 27001 procedures and performed audits, leading to an 80% reduction in security breaches.
 - Maintained the RAID log across projects, contributing to a 45% reduction in identified risks and issues.
@@ -73,7 +73,7 @@ Strengths:
 - Identifying and troubleshooting User Experience problems
 - Maintaining accurate product roadmaps
 
-## Projects (12)
+## Projects (17)
 
 ### 1. CreditCheck Platform (Qore, Product Manager)
 Industry: Fintech, Credit Data, B2B. Live: https://web.recova.ng
@@ -99,7 +99,7 @@ Comprehensive e-commerce solution for transit/logistics with booking management,
 Industry: SaaS, Enterprise Software, B2B, Fintech. Live: https://www.hydra.ng
 Consolidated API gateway integrating commercial banks for financial transactions. Built a unified layer abstracting individual bank APIs with real-time transaction processing and a security/compliance layer. Impact: reduced business integration time from months to weeks; scaled to thousands of daily transactions.
 
-### 7. AI Chatbot & Virtual Reality — Luna (InvestED Inc., Product Manager)
+### 7. AI Chatbot & Virtual Reality - Luna (InvestED Inc., Product Manager)
 Industry: EdTech, AI/ML.
 Luna is an AI-powered conversational chatbot with VR capabilities, handling customer queries on behalf of customer success. Trained NLP models, built a VR/chat hybrid UI, brand-voice framework, and smart escalation to humans. Impact: 73% reduction in response time, 89% CSAT for AI-handled chats, 45% fewer support tickets, first-contact resolution up from 62% to 84%.
 
@@ -107,7 +107,7 @@ Luna is an AI-powered conversational chatbot with VR capabilities, handling cust
 Industry: Health, Insurance. Live: https://leadwayhealth.com
 West African Third-Party Administrator for HMOs, serving insurers, brokers, and employer groups. Digitized HMO workflows across web and mobile, built corporate/provider portals, and the Prognosis HMS. Impact: 100+ corporate employer groups onboarded in year one, 300,000+ claims processed at 98.6% accuracy, average claim turnaround cut from 15 days to under 5.
 
-### 9. Agency Banking Solution — Cluster (Cluster, Product Manager)
+### 9. Agency Banking Solution - Cluster (Cluster, Product Manager)
 Industry: Agency Banking, POS, Fintech, B2B. Live: https://web.cluster.africa/logout
 Agent banking platform enabling deposits, withdrawals, transfers, and bill pay via a mobile app and back-office web portal. Offline-capable mobile app, digital KYC onboarding, real-time reconciliation. Impact: expanded banking access to thousands of underserved communities and enabled millions in daily transactions.
 
@@ -123,10 +123,30 @@ Third-Party Health Administrator (TPHA) born digital in Côte d'Ivoire. Designed
 Industry: Finance, Investment.
 Web portal making investing accessible, with multi-currency (Naira and USD) options to hedge against inflation, portfolio tracking tools, and expert guidance. Impact: simplified investment decisions for retail investors and positioned Leadway AM as a leader in digital micro-investment.
 
+### 13. Handyman Ops Desk (Baylor University, Student)
+Industry: Workflow Automation, AI Agents, Operations. Try the simulation: https://forms.gle/UvDgBFBwsR35MVQe8
+A no-code/low-code multi-agent business workflow built in n8n Cloud that automates the front-office of a handyman business. A customer submits a service request via Google Form; an Orchestrator workflow coordinates four specialized agents - Intake (Gemini-powered structured extraction), Pricing (rules-based JavaScript estimator with zip-aware travel and rush-fee logic), Scheduling (live time API + slot selector), and Comms (Gemini-drafted client/operations email). Impact: reduced a manual triage workflow into a single form submission that produces a fully-drafted customer email and operations alert; demonstrated agentic orchestration entirely in a no-code GUI as a graduate-coursework mid-term project.
+
+### 14. Shift - Volunteer Marketplace (WACODE 2026 - Baylor University, Product Manager & Co-Builder)
+Industry: Hackathon, Social Good, Two-Sided Marketplace. Live: https://shiftbear-five.vercel.app
+Two-sided volunteer marketplace ("the DoorDash for volunteering") built in 24 hours by a team of two and placed 4th at WACODE 2026. Nonprofits publish shifts with time, location, and capacity; students browse a personalized feed ranked for their schedule and proximity, claim slots in two taps, and join a smart waitlist with automated promotion. Built with Next.js 16, TypeScript, React 19, Tailwind v4, PostgreSQL (Neon), Resend for transactional email, and real magic-link auth (no fake/mocked sessions). Impact: shipped a production-ready marketplace - not a hackathon prototype - with real auth, transactional database, transactional email, and a documented path to scheduled cron; code open-sourced at github.com/Bobarinn/ShiftBear.
+
+### 15. Gemini Virtual Assistant (Personal Project, Designer & Builder)
+Industry: AI/ML, Conversational UI, Web.
+The knowledge-grounded virtual assistant embedded on this very portfolio website (the bot the visitor is currently chatting with). A Django view calls Google Gemini with a system prompt that injects a curated markdown knowledge base - a lightweight RAG pattern keeping responses factual, on-brand, and bounded to what Ayokunmi has authored about himself. Includes strict scope and persona guardrails, per-IP rate limiting (15 messages/minute via Django's cache framework), input validation, and a vanilla-JS launcher panel wired into every page. Impact: turned a static portfolio into a conversational experience and demonstrated practical RAG and prompt-engineering skills as a working artifact rather than a written claim.
+
+### 16. LangChain Conversational Agent (Baylor University, Student)
+Industry: AI/ML, Agent Frameworks.
+A foundational coursework project for the AI Principles class exploring LangChain's v1 agent API. Two iterations: v1 demonstrates a single-shot agent invocation, v2 evolves into a multi-turn CLI chatbot that manually maintains conversation history across turns. Built with LangChain v1's create_agent API, Google's Gemini 2.5 Flash via the langchain-google-genai integration, and dotenv-based credential hygiene. Impact: grounded fluency with the LangChain agent stack and the v1->v2 progression (single-shot to stateful loop), establishing the foundation reused in larger AI projects on this portfolio (Handyman Ops Desk's intake/comms agents, the Gemini Virtual Assistant).
+
+### 17. AI Video Generation with Google Flow (Baylor University, Student)
+Industry: AI/ML, Generative Media, Video.
+A coursework exercise using Google Flow - Google's AI filmmaking tool powered by the Veo video model - to generate short cinematic clips from text prompts and reference images. Focused less on code and more on craft: learning to prompt a generative video model with cinematographic intent (shot framing, camera movement, mood, pacing) and iterating on outputs to build intuition for what these models can and can't yet do reliably. Impact: built hands-on fluency with state-of-the-art AI video tooling and developed the prompt-as-direction discipline that transfers to any generative media tool (image, video, 3D).
+
 ## Personal / Beyond Work
-- Daily meditation since 2019 — credits it with sharper focus and energy
+- Daily meditation since 2019 - credits it with sharper focus and energy
 - Creative explorer: podcasts, Lo-fi music, photography (buildings, wood/porcelain/fluted-glass textures)
-- Self-described "comfort enthusiast" — lover of crocs
+- Self-described "comfort enthusiast" - lover of crocs
 - Loves adventure, video games, reading about art and nature, and documenting experiences outdoors
 
 ## How the assistant should respond

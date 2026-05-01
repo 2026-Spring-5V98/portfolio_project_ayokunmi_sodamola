@@ -31,7 +31,7 @@ def home(request):
                 f"{data['message']}\n\n"
                 "----------------------------------------\n"
                 f"You can reply directly to this email to respond to {data['name']}.\n\n"
-                "— Portfolio Contact Form"
+                "- Portfolio Contact Form"
             )
             try:
                 EmailMessage(
@@ -41,7 +41,7 @@ def home(request):
                     to=[settings.CONTACT_RECIPIENT_EMAIL],
                     reply_to=[data["email"]],
                 ).send(fail_silently=False)
-                messages.success(request, "Thanks — your message has been sent.")
+                messages.success(request, "Thanks - your message has been sent.")
             except Exception as exc:
                 print("[Contact form] email error:", exc)
                 messages.error(
