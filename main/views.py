@@ -5,13 +5,13 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.cache import cache
 from django.core.mail import EmailMessage
-from django.http import Http404, JsonResponse
-from django.shortcuts import redirect, render
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from . import chatbot
 from .forms import ContactForm
-from .projects_data import PROJECTS, PROJECTS_BY_SLUG
+from .models import Experience, Project, Skill
 
 
 def home(request):
@@ -50,20 +50,26 @@ def home(request):
                 )
             return redirect(request.path + "#contact")
 
+    skills_by_group = {
+        "core": Skill.objects.filter(group="core"),
+        "languages": Skill.objects.filter(group="languages"),
+        "tools": Skill.objects.filter(group="tools"),
+    }
     return render(request, "main/home.html", {
-        "projects": PROJECTS,
+        "projects": Project.objects.all(),
+        "skills_by_group": skills_by_group,
         "form": form,
     })
 
 
 def about_me(request):
-    return render(request, "main/about_me.html")
+    return render(request, "main/about_me.html", {
+        "experiences": Experience.objects.all(),
+    })
 
 
 def project_detail(request, slug):
-    project = PROJECTS_BY_SLUG.get(slug)
-    if not project:
-        raise Http404("Project not found")
+    project = get_object_or_404(Project, slug=slug)
     return render(request, "main/project_detail.html", {"project": project})
 
 

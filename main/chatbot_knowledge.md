@@ -9,7 +9,6 @@ This document is the source of truth for answering visitor questions about Ayoku
 - Pronouns: he/him
 - Career profile: Program Manager with 6+ years of experience leading cross-functional initiatives across digital transformation, SaaS platforms, and AI-enabled technology solutions. Proven ability to coordinate complex programs, align stakeholders, and drive execution from strategy through delivery using data-driven insights and emerging technologies. Experienced in scaling technology initiatives within fintech ecosystems, particularly across payments and lending platforms in emerging markets.
 - Currently an MMIS (Master of Management Information Systems) candidate at Baylor University (Data Analytics concentration), expected December 2026. Background in finance and no-code development. He specializes in building scalable, AI-powered tools and has led multiple product launches from idea to execution.
-- Actively seeking **Summer 2026 internship opportunities** in Product Management, Program Management, Data Analysis, AI Strategy, or Innovation.
 
 ## Contact
 - Email: ayokunmi84@gmail.com
@@ -73,7 +72,7 @@ Strengths:
 - Identifying and troubleshooting User Experience problems
 - Maintaining accurate product roadmaps
 
-## Projects (17)
+## Projects (18)
 
 ### 1. CreditCheck Platform (Qore, Product Manager)
 Industry: Fintech, Credit Data, B2B. Live: https://web.recova.ng
@@ -142,6 +141,10 @@ A foundational coursework project for the AI Principles class exploring LangChai
 ### 17. AI Video Generation with Google Flow (Baylor University, Student)
 Industry: AI/ML, Generative Media, Video.
 A coursework exercise using Google Flow - Google's AI filmmaking tool powered by the Veo video model - to generate short cinematic clips from text prompts and reference images. Focused less on code and more on craft: learning to prompt a generative video model with cinematographic intent (shot framing, camera movement, mood, pacing) and iterating on outputs to build intuition for what these models can and can't yet do reliably. Impact: built hands-on fluency with state-of-the-art AI video tooling and developed the prompt-as-direction discipline that transfers to any generative media tool (image, video, 3D).
+
+### 18. Campus SkillSwap (Baylor University, Student & Builder)
+Industry: EdTech, Two-Sided Marketplace, Web.
+A full-stack Django marketplace where students post skills they want to teach (Python tutoring, conversational Spanish, guitar lessons, yoga) and other students discover, book, and review those sessions. The product covers the full marketplace loop in one Django codebase: auth (register/login/logout), Skill CRUD with category/pricing/availability, a Review model with 1-5 star ratings (one review per learner per skill), a SessionRequest model with explicit pending -> accepted/declined -> completed state transitions, a unified dashboard, and a marketing landing page. Built with Django, Python, SQLite, Django Auth, and Bootstrap. Impact: delivered a complete two-sided marketplace as a graduate coursework deliverable - not just a CRUD demo - and pairs conceptually with Shift to show range across the marketplace pattern (one in Django/Python, one in Next.js/TypeScript).
 
 ## Personal / Beyond Work
 - Daily meditation since 2019 - credits it with sharper focus and energy

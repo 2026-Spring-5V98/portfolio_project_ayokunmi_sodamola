@@ -9,7 +9,11 @@
     <a href="{% url 'home' %}#projects" class="back-link">← Back to Portfolio</a>
     <img src="{% static 'main/images/' %}{{ project.image }}" alt="{{ project.title }}" />
     <h1>{{ project.detail_title }}</h1>
-    <p class="muted" style="font-size:1.1rem;">{{ project.overview }}</p>
+    {% if project.one_sentence_summary %}
+      <p class="muted" style="font-size:1.1rem;">{{ project.one_sentence_summary }}</p>
+    {% else %}
+      <p class="muted" style="font-size:1.1rem;">{{ project.description }}</p>
+    {% endif %}
 
     <div class="project-meta">
       <div>
@@ -22,7 +26,7 @@
       </div>
       <div>
         <div class="label">Industry</div>
-        <div class="value">{{ project.industry }}</div>
+        <div class="value">{{ project.category }}</div>
       </div>
     </div>
 
@@ -37,24 +41,55 @@
 
 <section>
   <div class="container">
-    <div class="project-section">
-      <h2>Challenges</h2>
-      <ul>
-        {% for item in project.challenges %}<li>{{ item }}</li>{% endfor %}
-      </ul>
-    </div>
-    <div class="project-section">
-      <h2>Solutions</h2>
-      <ul>
-        {% for item in project.solutions %}<li>{{ item }}</li>{% endfor %}
-      </ul>
-    </div>
-    <div class="project-section">
-      <h2>Impact</h2>
-      <ul>
-        {% for item in project.impact %}<li>{{ item }}</li>{% endfor %}
-      </ul>
-    </div>
+    {% if project.one_sentence_summary %}
+      <div class="project-section">
+        <h2>Business Problem</h2>
+        <p>{{ project.business_problem }}</p>
+      </div>
+      <div class="project-section">
+        <h2>Tools Used</h2>
+        <div class="tags">
+          {% for t in project.tools_used %}<span class="tag">{{ t }}</span>{% endfor %}
+        </div>
+      </div>
+      <div class="project-section">
+        <h2>Key Features</h2>
+        <ul>
+          {% for item in project.key_features %}<li>{{ item }}</li>{% endfor %}
+        </ul>
+      </div>
+      <div class="project-section">
+        <h2>My Role &amp; Contribution</h2>
+        <p>{{ project.role_contribution }}</p>
+      </div>
+      <div class="project-section">
+        <h2>Biggest Challenge</h2>
+        <p>{{ project.biggest_challenge }}</p>
+      </div>
+      <div class="project-section">
+        <h2>What I Learned</h2>
+        <p>{{ project.lessons_learned }}</p>
+      </div>
+    {% else %}
+      <div class="project-section">
+        <h2>Challenges</h2>
+        <ul>
+          {% for item in project.challenges %}<li>{{ item }}</li>{% endfor %}
+        </ul>
+      </div>
+      <div class="project-section">
+        <h2>Solutions</h2>
+        <ul>
+          {% for item in project.solutions %}<li>{{ item }}</li>{% endfor %}
+        </ul>
+      </div>
+      <div class="project-section">
+        <h2>Impact</h2>
+        <ul>
+          {% for item in project.impact %}<li>{{ item }}</li>{% endfor %}
+        </ul>
+      </div>
+    {% endif %}
   </div>
 </section>
 {% endblock %}

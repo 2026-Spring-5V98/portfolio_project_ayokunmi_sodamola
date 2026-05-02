@@ -1,4 +1,10 @@
-"""Static project data. Easy to swap for a Django model later."""
+"""Seed data for the Project model.
+
+Imported by main/migrations/0002_seed_initial_data.py on first migrate.
+After the database is seeded, the live site reads from main.models.Project
+(see main/views.py), not from this module. Edit projects via Django admin
+(/admin/main/project/) for ongoing changes.
+"""
 
 PROJECTS = [
     {
@@ -458,29 +464,44 @@ PROJECTS = [
         "company": "Baylor University",
         "industry": "Workflow Automation, AI Agents, Operations",
         "technologies": ["n8n", "Google Gemini", "JavaScript", "Google Sheets", "Gmail API", "Webhooks"],
-        "overview": "Handyman Ops Desk is a no-code/low-code multi-agent workflow built in n8n Cloud that automates the front-office of a handyman business. A customer submits a service request through a Google Form; an Orchestrator workflow then coordinates four specialized agent workflows - Intake (Gemini-powered structured extraction), Pricing (rules-based JavaScript estimator with zip-aware travel and rush-fee logic), Scheduling (live time API + slot selector that respects customer day preferences), and Comms (Gemini-drafted confirmation message) - and emails differentiated confirmations to the client and operations team based on job urgency and estimate size.",
-        "challenges": [
-            "Coordinating four independent agent workflows over HTTP while preserving job, pricing, and scheduling context across each step",
-            "Forcing Gemini to return strictly valid JSON - the model often wrapped responses in markdown code fences (```json ... ```), breaking downstream parsing",
-            "Handling n8n quirks where embedded {{ }} expressions inside literal JSON in Respond-to-Webhook nodes failed validation",
-            "Routing high-priority or high-value jobs (urgency = high OR estimate > $300) to operations while normal jobs go straight to client confirmation",
-            "Normalizing inconsistent free-text address fields into structured address, unit, and zip components",
+        "one_sentence_summary": "A no-code multi-agent workflow built in n8n Cloud that automates the front-office of a handyman business from form submission to client confirmation.",
+        "business_problem": "Small home-services businesses lose customers in the gap between request submission and a quote or scheduling reply. The manual triage workflow (read request, estimate, schedule, reply) is slow and inconsistent, and prospective customers move on while staff are still drafting an email.",
+        "key_features": [
+            "Form-driven intake from a public Google Form into a watched response sheet that automatically kicks off the workflow",
+            "Gemini-powered extraction of structured job data (service, urgency, address, zip) from free-text submissions",
+            "Rules-based JavaScript pricing engine with catalog lookup by service, zip-aware travel cost, and a 20% rush surcharge for high-urgency jobs",
+            "Live-time slot scheduling that respects customer day preferences",
+            "Routing logic that sends high-priority or high-value jobs (urgency = high or estimate > $300) to operations, and standard jobs straight to a client confirmation email",
+            "Differentiated Gmail templates for client confirmations vs. operations alerts so each audience gets the right message",
         ],
-        "solutions": [
-            "Designed an Orchestrator workflow that calls four sub-agent webhooks in sequence, using Set nodes (Store Job, Store Pricing, Store Scheduling) and Merge nodes to carry context forward between steps",
-            "Added strict JSON-only system prompts to every Gemini node and a JavaScript Clean JSON node that strips markdown fences before JSON.parse, with a clear error message preserving the raw output for debugging",
-            "Switched Respond-to-Webhook nodes to Expression mode (or Text + JSON.stringify with application/json content-type) to avoid literal-JSON validation errors",
-            "Built rules-based pricing in JavaScript: catalog lookup by service, zip-based travel cost (76706 = $0, 76708 = $10, else $20), and a 20% rush surcharge for high-urgency jobs",
-            "Implemented an IF node that branches on urgency or estimate threshold, routing to a Comms (Operations) path or Comms (Client) path with separate Gmail templates for each audience",
-            "Used Google Sheets Trigger (rowAdded) on a public Google Form response sheet so new customer requests automatically kick off the workflow with no manual intervention",
+        "role_contribution": "Sole designer and builder. Architected the orchestrator-plus-four-agents topology, wrote every system prompt, built the JavaScript pricing logic, designed the IF-based routing, and authored the Gmail templates for both client and operations audiences.",
+        "biggest_challenge": "Forcing Gemini to return strictly valid JSON. The model kept wrapping responses in markdown code fences (```json ... ```), which broke downstream JSON.parse calls and silently aborted the workflow mid-flow. Solved with strict JSON-only system prompts on every Gemini node, plus a JavaScript Clean JSON node that strips fences before parsing and surfaces a clear error path that preserves the raw model output for debugging.",
+        "what_you_learned": "Agentic orchestration is more about plumbing and contracts than prompts. The hard parts are passing context cleanly between agents, taming non-deterministic outputs (JSON-only prompting plus post-parse cleanup), and choosing where rule-based logic belongs vs. where the LLM should drive. Rule-based deterministic logic (pricing, slot filtering) composes cleanly alongside generative AI (intake parsing, message drafting) in the same pipeline, and these patterns generalize to any LLM-in-workflow project.",
+    },
+    {
+        "slug": "campus-skillswap",
+        "title": "Campus SkillSwap",
+        "detail_title": "Campus SkillSwap - Peer-to-Peer Student Skills Marketplace",
+        "short_description": "A full-stack Django marketplace where students post skills they offer (tutoring, languages, music, fitness) and book sessions directly with peers. Auth, skill CRUD, star reviews, and a session-booking workflow.",
+        "image": "campus-skillswap.png",
+        "live_url": "",
+        "role": "Student & Builder",
+        "company": "Baylor University",
+        "industry": "EdTech, Two-Sided Marketplace, Web",
+        "technologies": ["Django", "Python", "SQLite", "Django Auth", "HTML/CSS", "Bootstrap"],
+        "one_sentence_summary": "A full-stack Django marketplace where students post skills they can teach and other students discover, book, and review sessions directly with peers.",
+        "business_problem": "Students have skills they could teach (Python, languages, music, fitness) and peers who want to learn them, but no campus-native channel exists. Existing platforms charge professional rates and target adults, so student-to-student exchange falls back to word-of-mouth and Discord, which is slow, fragmented, and trust-poor.",
+        "key_features": [
+            "Skill listings with category, pricing type (free or paid), contact preference, and availability status",
+            "Star-rating reviews (1-5) with optional comments, enforced unique per learner per skill",
+            "Session booking with proposed time, message, and explicit pending -> accepted/declined -> completed state transitions",
+            "Unified dashboard that adapts to the user's current role (provider or learner) without splitting into two apps",
+            "Marketing landing page with at-a-glance counters (skills posted, providers, categories) so a first-time visitor immediately understands the product",
+            "Auth flows (register, login, logout) using Django's built-in auth, with a single User foreign key on each model to scope ownership cleanly",
         ],
-        "impact": [
-            "Demonstrated a working agentic-orchestration pattern (one orchestrator, four specialized agents) entirely in a no-code GUI, with each agent independently activatable and testable via its own Production webhook",
-            "Reduced a manual triage workflow (read request → estimate → schedule → reply) into a single form submission that produces a fully-drafted customer email and an operations alert",
-            "Captured reusable n8n + Gemini integration patterns - JSON-only prompting, fence-stripping cleanup, and HTTP-body object passing - that generalize to any LLM-in-workflow project",
-            "Showed how rule-based deterministic logic (pricing, slot filtering) can be cleanly composed alongside generative AI (intake parsing, message drafting) in the same pipeline",
-            "Delivered a complete end-to-end business automation as a graduate-coursework mid-term project, from form ingestion to differentiated client and operations email outputs",
-        ],
+        "role_contribution": "Sole designer and builder. Modeled all three core entities (Skill, Review, SessionRequest), wrote views, forms, and templates, integrated Django auth, designed the dashboard to adapt by role, and shipped the marketing landing page that communicates the product in seconds.",
+        "biggest_challenge": "Designing a session-booking workflow that respects state transitions and stays consistent across two different views (the learner's outgoing requests and the provider's incoming requests). Solved by encoding the status field as an explicit choice list, using the same SessionRequest object on both sides, and making the dashboard adaptive to the current user's role rather than splitting the codebase into two parallel apps.",
+        "what_you_learned": "How a real two-sided marketplace works underneath the polish: the mental model (listings, requests, status transitions, reviews) is what matters, and the framework (Django ORM, auth, templating) is the tool that executes it. Designing for two audiences in one codebase via role-adaptive views is far cleaner than fragmenting into separate apps. The pattern transfers directly to any other marketplace product.",
     },
     {
         "slug": "portfolio-assistant",
@@ -493,30 +514,19 @@ PROJECTS = [
         "company": "Personal Project",
         "industry": "AI/ML, Conversational UI, Web",
         "technologies": ["Django", "Google Gemini API", "google-genai SDK", "Vanilla JS", "RAG-lite", "Prompt Engineering"],
-        "overview": "A knowledge-grounded virtual assistant embedded directly on this portfolio website. Visitors can click the chat launcher in the bottom-right corner of any page and ask about my background, skills, projects, or how to get in touch. Behind the assistant is a Django view that calls Google Gemini with a system prompt synthesizing a hand-curated markdown knowledge base - a lightweight RAG pattern that keeps responses factual, on-brand, and bounded to what I've actually documented about myself.",
-        "challenges": [
-            "Preventing hallucination - generic LLMs cheerfully invent dates, metrics, and employment history when asked about a specific person",
-            "Keeping the persona consistent and on-brand across questions - friendly but professional, third-person with correct pronouns, never breaking character",
-            "Scoping the assistant tightly to portfolio-relevant questions without making it feel curt when visitors go off-topic",
-            "Protecting the Gemini endpoint from abuse - bots, accidental spam, or runaway costs from a single bad actor",
-            "Designing a chat UI that felt premium and modern without a heavy frontend framework, since the rest of the site is server-rendered Django templates",
+        "one_sentence_summary": "A knowledge-grounded AI assistant embedded on this portfolio that answers visitor questions about Ayokunmi using only a curated markdown knowledge base.",
+        "business_problem": "A static portfolio expects visitors to skim and search for what they want. Recruiters and visitors with specific questions ('is he available for internships?', 'has he built anything with AI agents?') often leave without that answer, and a generic chatbot would happily invent dates, metrics, and employment history that aren't true.",
+        "key_features": [
+            "Curated chatbot_knowledge.md file injected into Gemini's system instruction, so the model answers only from facts authored by Ayokunmi - not from its training data",
+            "Strict system prompt enforcing third-person he/him pronouns, friendly-but-professional tone, 1-3 paragraph length cap, and an explicit refusal-with-fallback for out-of-scope questions",
+            "Dedicated hiring/availability rule that surfaces Summer 2026 internship search and contact email when visitors ask about opportunities",
+            "Per-IP rate limiting (15 messages per minute) using Django's cache framework with time-bucketed keys, returning a 429 with a friendly message when exceeded",
+            "Input validation (1000-char max, JSON parse guards, empty-message rejection) and an explicit 503 when GEMINI_API_KEY is missing, so the chat fails gracefully instead of leaking errors",
+            "Vanilla-JS launcher widget (floating button, slide-in panel, suggestion chips, message bubbles) wired into the Django base template so it renders on every page without a frontend framework",
         ],
-        "solutions": [
-            "Built a RAG-lite pattern: a structured chatbot_knowledge.md file is read at boot and injected into Gemini's system instruction, so the model answers only from facts I've authored - not from its training data",
-            "Wrote a strict system prompt enforcing third-person he/him pronouns, friendly-but-professional tone, 1–3 paragraph length cap, and an explicit 'I'm not sure - reach out via email' fallback for out-of-scope questions",
-            "Added a dedicated hiring/availability rule that surfaces my Summer 2026 internship search and contact email when visitors ask about opportunities",
-            "Implemented per-IP rate limiting (15 messages/minute) using Django's cache framework with time-bucketed keys, returning a 429 with a friendly message when exceeded",
-            "Added input validation (1000-char max, JSON parse guards, empty-message rejection) and an explicit 503 when GEMINI_API_KEY is missing - so the chat fails gracefully instead of leaking errors",
-            "Cached the Gemini client and compiled system prompt with functools.lru_cache so cold starts pay the file-read and client-init cost only once per process",
-            "Built the chat UI in vanilla JS - a floating launcher button, slide-in panel, suggestion chips, and message bubbles - wired into the Django base template so it renders on every page without a framework",
-        ],
-        "impact": [
-            "Turned a static portfolio into a conversational experience - visitors can ask 'what has he built with AI?' or 'is he available for internships?' and get an immediate, accurate answer instead of skimming the page",
-            "Demonstrated practical RAG and prompt-engineering skills as a working artifact on the very site reviewers are reading, not just as a written claim",
-            "Established a reusable pattern (Django + Gemini + markdown knowledge file + rate limit) that generalizes to any scoped Q&A bot - internal docs assistant, product help bot, FAQ replacement",
-            "Showed restraint in AI design - strict scoping, refusal-with-fallback for unknown topics, and transparent rate limits - the same guardrails real production AI products need",
-            "Live and continuously available at the bottom-right of every page on this portfolio; iterated alongside the rest of the site as both a feature and a portfolio piece",
-        ],
+        "role_contribution": "Sole designer and builder. Wrote the system prompt, authored the markdown knowledge base, implemented the Django view with rate limiting and graceful fallbacks, designed the chat UI in vanilla JS, and tuned the guardrails (refusal patterns, hiring-question handling, persona consistency).",
+        "biggest_challenge": "Preventing hallucination on a topic where the model has zero training data (a specific person). Generic LLMs cheerfully invent details when asked about an individual. Solved with a RAG-lite pattern: hand-authored markdown knowledge file injected into the system prompt, plus an explicit instruction that forces the model to refuse and redirect to email/LinkedIn whenever asked anything outside the documented scope.",
+        "what_you_learned": "Practical AI design is about restraint, not capability. The system prompt, the knowledge boundary, and the refusal behavior do more for product quality than the model upgrade. The same pattern (LLM plus scoped knowledge plus rate limit plus graceful refusal) is exactly what real production AI products run, and it generalizes to any internal docs assistant, product help bot, or FAQ replacement.",
     },
     {
         "slug": "langchain-agent",
@@ -529,27 +539,19 @@ PROJECTS = [
         "company": "Baylor University",
         "industry": "AI/ML, Agent Frameworks",
         "technologies": ["LangChain v1", "LangGraph", "Google Gemini 2.5 Flash", "langchain-google-genai", "Python", "python-dotenv"],
-        "overview": "A foundational coursework project for the AI Principles class, exploring LangChain's v1 agent API. The project ships in two iterations: v1 demonstrates a single-shot agent invocation answering one question, and v2 evolves it into a multi-turn CLI chatbot that manually maintains conversation history across turns. Both versions use Google's Gemini 2.5 Flash through the langchain-google-genai integration, with a clean system prompt and graceful exit handling. Small in scope, but deliberate in establishing the agent-framework patterns used across larger downstream projects on this portfolio.",
-        "challenges": [
-            "Understanding the LangChain v1 agent abstraction - when create_agent adds value over a direct LLM call, and how it composes with LangGraph internals",
-            "Wiring Gemini into LangChain via langchain-google-genai (a different SDK from the raw google-genai client used elsewhere in my projects)",
-            "Managing conversational state - the agent itself is stateless per invocation, so chat history has to be threaded back in on every turn",
-            "Aligning dependency versions across the langchain / langchain-core / langgraph / langchain-google-genai matrix without version conflicts",
-            "Resisting the temptation to over-engineer a learning exercise - keeping v1 minimal and v2 only as complex as needed to demonstrate multi-turn state",
+        "one_sentence_summary": "A two-iteration coursework chatbot built with LangChain v1's create_agent API, evolving from a single-shot LLM call to a stateful CLI loop with multi-turn memory.",
+        "business_problem": "Coursework framing rather than a market problem. The AI Principles assignment was to build foundational fluency with LangChain's agent abstraction and Gemini integration, since these are the building blocks for the more complex agentic systems used in industry (and reused in larger projects on this portfolio).",
+        "key_features": [
+            "v1: single-shot agent invocation answering one user question end-to-end",
+            "v2: multi-turn CLI chatbot that manually maintains conversation history across turns",
+            "Gemini 2.5 Flash wired in via the langchain-google-genai integration",
+            "Reusable system prompt ('clear, concise, polite, professional, safe') focused on agent mechanics rather than prompt engineering",
+            "dotenv-based API key management to keep secrets out of source",
+            "Graceful exit on 'bye' or 'exit' input, with try/except around reply extraction so the loop never crashes silently on an unexpected response shape",
         ],
-        "solutions": [
-            "Used create_agent with an empty tools list to stay focused on the agent loop itself before adding tool-calling complexity in later coursework",
-            "Loaded the Gemini API key from a local .env via python-dotenv, keeping secrets out of source - same hygiene pattern used in the Django and n8n projects on this portfolio",
-            "Built v2's chat loop with a simple list-of-messages history that gets concatenated with each new user input and passed back into agent.invoke({'messages': ...}) - the canonical pattern for stateful agents in the new LangChain API",
-            "Added graceful exit handling on 'bye' / 'exit' inputs and a try/except around reply extraction so the loop never crashes silently on an unexpected response shape",
-            "Kept the system prompt deliberately bland and reusable ('clear, concise, polite, professional, safe') so the project demonstrates the agent mechanics without prompt-engineering noise",
-        ],
-        "impact": [
-            "Grounded my fluency with LangChain v1's create_agent API and the Gemini integration, establishing the foundation reused in larger AI projects on this portfolio (Handyman Ops Desk's intake/comms agents, the Gemini Virtual Assistant)",
-            "Made the v1→v2 progression visible - a single-shot call evolved into a stateful conversational loop - which is exactly the mental model needed before adding tools, memory, and orchestration",
-            "Built the muscle memory for the LangChain dependency stack (langchain, langchain-core, langgraph, langchain-google-genai) and the .env-based credential workflow, both of which carried forward into production projects",
-            "Served its purpose as a coursework deliverable for AI Principles while doubling as a clean reference implementation I can extend with tools, retrieval, or LangSmith tracing in future iterations",
-        ],
+        "role_contribution": "Sole student author. Designed the v1 to v2 progression to make the stateful-conversation pattern visible, kept scope intentionally minimal, and matched the dependency stack to what's used in the larger AI projects on this portfolio.",
+        "biggest_challenge": "Managing conversational state when the agent itself is stateless per invocation. Solved by building a list-of-messages history that gets concatenated with each new user input and passed back into agent.invoke({'messages': ...}) - the canonical pattern for stateful agents in the new LangChain API. Aligning the dependency matrix (langchain, langchain-core, langgraph, langchain-google-genai) without version conflicts was a close second.",
+        "what_you_learned": "When to use the agent abstraction over a direct LLM call (you reach for it as soon as you need tools or multi-step reasoning) and how to manage chat history outside the agent. The v1 to v2 progression - single-shot call evolving into a stateful loop - is exactly the mental model needed before adding tools, memory, and orchestration. Same patterns scale up to the production multi-agent work in Handyman Ops Desk and the Gemini Virtual Assistant on this portfolio.",
     },
     {
         "slug": "google-flow-video",
@@ -562,25 +564,18 @@ PROJECTS = [
         "company": "Baylor University",
         "industry": "AI/ML, Generative Media, Video",
         "technologies": ["Google Flow", "Veo", "Text-to-Video", "Image-to-Video", "Prompt Engineering", "Generative AI"],
-        "overview": "An AI Principles coursework exercise using Google Flow - Google's AI filmmaking tool powered by the Veo video model - to generate short cinematic clips from text prompts and reference images. The exercise focused less on code and more on craft: learning how to prompt a generative video model with cinematographic intent (shot framing, camera movement, mood, pacing) and iterating on outputs to build intuition for what these models can and can't yet do reliably.",
-        "challenges": [
-            "Translating cinematic ideas (specific camera moves, lighting, pacing, subject blocking) into prompt text that the video model could interpret consistently",
-            "Working within the model's strengths and around its weaknesses - short clip lengths, occasional temporal artifacts, limited control over specific subject identity across shots",
-            "Iterating efficiently on a generative tool where each render is expensive and non-deterministic - the cost of 'one more variation' is real",
-            "Treating AI-generated video as raw footage rather than finished output - knowing when to accept a clip, when to re-prompt, and when to combine with other tools",
+        "one_sentence_summary": "A coursework exploration of Google Flow (Veo) generating short cinematic clips from text and image prompts to learn the craft of directing generative video models.",
+        "business_problem": "Coursework framing rather than a market problem. The AI Principles assignment was to build hands-on fluency with state-of-the-art generative video tooling and develop intuition for prompt-as-direction, since AI video models are rapidly entering professional creative workflows alongside generative image and text models.",
+        "key_features": [
+            "Generated short cinematic clips from text-only prompts using Google Flow's prompt-and-render loop",
+            "Generated image-conditioned clips, using reference images to anchor subject and style",
+            "Practiced director-style prompting - naming shot type, camera move, environment, mood, and subject behavior in compact phrases the model can parse",
+            "Triage workflow: generate a small batch, pick the strongest clip, then re-prompt that direction with tighter constraints rather than chasing perfection on the first take",
+            "Personal documentation of which prompt patterns produced reliable output and which kept failing, to build durable intuition",
         ],
-        "solutions": [
-            "Used Google Flow's prompt-and-render loop to generate clips from both text-only prompts and image-conditioned prompts, comparing how reference images anchor subject and style",
-            "Wrote prompts in a director's voice - naming the shot type, camera move, environment, mood, and subject behavior in compact phrases the model could parse",
-            "Adopted a triage workflow: generate a small batch, pick the strongest clip, then re-prompt that one direction with tighter constraints rather than chasing perfection on the first take",
-            "Documented what worked and what didn't - which prompt patterns produced reliable output, which kept failing - to build personal intuition for future generative-video work",
-        ],
-        "impact": [
-            "Built hands-on fluency with state-of-the-art AI video tooling (Google Flow / Veo), which is rapidly becoming part of the modern designer-builder toolkit alongside generative image and text models",
-            "Developed intuition for prompt-as-direction - how to communicate cinematographic intent to a generative model - a skill that transfers to any image, video, or 3D generative tool",
-            "Reinforced a creative discipline: AI-generated assets are raw material, not deliverables, and the value comes from taste in selection and combination, not from the model itself",
-            "Served the AI Principles coursework requirement while expanding the creative-media toolkit I draw on for product work - promo videos, demo reels, brand assets, and concept storyboards",
-        ],
+        "role_contribution": "Sole student. Designed the prompts, ran the generation/triage loop, and documented the patterns that worked vs. failed for future generative-video work.",
+        "biggest_challenge": "Translating cinematic intent (specific camera moves, lighting, pacing, subject identity across shots) into prompt text the model could reliably interpret. The model has real strengths and real weaknesses, and the cost of 'one more variation' is non-trivial - so the iteration discipline matters as much as the prompt itself.",
+        "what_you_learned": "Generative AI assets are raw material, not deliverables. The value is in selection and combination, not the model. Director-voice prompting (naming shot type, camera move, mood, subject behavior in compact phrases) transfers to any image, video, or 3D generative tool. AI video tooling now belongs in the modern designer-builder toolkit alongside generative image and text models.",
     },
 ]
 
